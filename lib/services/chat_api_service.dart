@@ -84,12 +84,7 @@ class GeminiChatSession {
       'GeminiChatSession initialized: endpoint=$endpoint timeout=${timeout.inSeconds}s auth=${useBearerToken ? 'Bearer' : 'Key'}',
     );
 
-    return GeminiChatSession._(
-      apiKey,
-      useBearerToken,
-      endpoint,
-      timeout,
-    );
+    return GeminiChatSession._(apiKey, useBearerToken, endpoint, timeout);
   }
 
   Future<String> sendMessage(
@@ -171,18 +166,18 @@ class GeminiChatSession {
       ],
     });
 
-    return jsonEncode({
-      'systemInstruction': {
-        'parts': [
-          {'text': _systemPrompt},
-        ],
-      },
+    final body = <String, dynamic>{
       'contents': contents,
-      'generationConfig': {
-        'temperature': 0.7,
-        'maxOutputTokens': 512,
-      },
-    });
+      'generationConfig': {'temperature': 0.7, 'maxOutputTokens': 512},
+    };
+
+    body['systemInstruction'] = {
+      'parts': [
+        {'text': _systemPrompt},
+      ],
+    };
+
+    return jsonEncode(body);
   }
 
   String _parseResponse(http.Response response) {

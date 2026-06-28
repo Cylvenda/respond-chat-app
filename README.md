@@ -1,118 +1,74 @@
-# CyberGuard - Cybersecurity Awareness Chatbot
+# CyberGuard
 
-A Flutter-based cybersecurity awareness chatbot with ChatGPT-like interface that provides expert guidance on cybersecurity topics through API integration.
+CyberGuard is a Flutter-based cybersecurity awareness chatbot with a ChatGPT-style interface. It uses Google Gemini to answer questions about phishing, password safety, malware, privacy, and secure everyday habits.
 
 ## Features
 
-✅ **Interactive Chat Interface**
-- Clean, intuitive chat UI similar to ChatGPT
-- Real-time message streaming with loading indicators
+- Responsive chat experience for mobile and desktop
+- Gemini-powered responses with conversation context
+- Loading and error states for API calls
 - Light and dark theme support
-- Responsive design for mobile and desktop
+- Message actions such as copy and delete
 
-✅ **API-Powered Responses**
-- Integrates with Google Gemini for intelligent responses
-- Conversation history context for coherent discussions
-- Error handling and timeout management
-- Secure API key management via environment variables
+## Requirements
 
-✅ **Cybersecurity Focus**
-- Expert guidance on phishing prevention
-- Password security best practices
-- Malware protection strategies
-- Data privacy and security tips
-- General security awareness
-
-✅ **User Experience**
-- Copy message to clipboard functionality
-- Delete individual messages
-- Create multiple conversations
-- Clear chat history
-- Message timestamps
+- Flutter SDK 3.11+
+- A Google Gemini API key
 
 ## Quick Start
 
-### 1. Prerequisites
-- Flutter SDK 3.11.5+
-- OpenAI API key
+1. Install dependencies
+   ```bash
+   flutter pub get
+   ```
 
-### 2. Setup
-```bash
-# Install dependencies
-flutter pub get
+2. Create your environment file
+   ```bash
+   touch .env
+   ```
 
-# Create .env file with your API key
-cp .env.example .env
-# Edit .env and add: OPENAI_API_KEY=your_key_here
-```
+3. Add your Gemini credentials to `.env`
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key
+   GEMINI_AUTH_TYPE=key
+   GEMINI_API_ENDPOINT=https://generativelanguage.googleapis.com/v1beta2/models/gemini-2.5-flash:generateMessage
+   GEMINI_MODEL=gemini-2.5-flash
+   API_TIMEOUT_SECONDS=30
+   ```
 
-### 3. Run
-```bash
-flutter run
-```
+4. Run the app
+   ```bash
+   flutter run
+   ```
 
 ## Project Structure
 
-```
+```text
 lib/
-├── main.dart                          # App entry point
-├── models/message.dart                # Data models
-├── theme/app_theme.dart               # UI themes
-├── services/chat_api_service.dart     # API integration
-├── providers/chat_provider.dart       # State management
-├── screens/chat_screen.dart           # Main UI
-├── widgets/message_bubble.dart        # Message component
-├── constants/cybersecurity_constants  # Knowledge base
-└── utils/app_utils.dart               # Helpers
+  main.dart
+  models/
+  providers/
+  screens/
+  services/
+  theme/
+  utils/
+  widgets/
 ```
 
-## Configuration
+## Main Components
 
-Edit `.env` file:
-```
-GEMINI_API_KEY=your_google_gemini_api_key_here
-GEMINI_API_ENDPOINT=https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText
-GEMINI_MODEL=text-bison-001
-API_TIMEOUT_SECONDS=30
-```
-
-## Architecture
-
-- **State Management**: Provider (ChangeNotifier)
-- **API Client**: HTTP package with error handling
-- **Data Models**: Message, Conversation, MessageRole, MessageType
-- **Theme System**: Material Design 3 light/dark themes
+- `lib/services/chat_api_service.dart` handles the Gemini API request flow
+- `lib/providers/chat_provider.dart` manages chat state and conversation updates
+- `lib/screens/chat_screen.dart` renders the main chat UI
 
 ## Troubleshooting
 
-**Build errors?**
-```bash
-flutter clean && flutter pub get
-```
+If the app fails to start or respond:
 
-**API not responding?**
-- Check `.env` file exists and has valid API key
-- Verify internet connectivity
-- Check API endpoint URL
+- confirm `.env` exists and contains a valid Gemini key
+- run `flutter clean && flutter pub get`
+- verify your internet connection and API permissions
 
-**UI not showing?**
-- Ensure flutter_dotenv loads `.env` before ChatProvider initializes
+## License
 
-## Dependencies
-
-- provider: State management
-- http: API requests
-- flutter_dotenv: Environment variables
-- uuid: ID generation
-- intl: Date formatting
-
-See `pubspec.yaml` for exact versions.
-
-## Learn More
-
-- [Flutter Documentation](https://flutter.dev)
-- [OpenAI API Docs](https://platform.openai.com/docs)
-
----
-
-**Made with ❤️ for cybersecurity awareness**
+This project is for educational and demo purposes.
