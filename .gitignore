@@ -1,0 +1,102 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.pdb
+*.idb
+*.DS_Store
+*.swp
+*.tmp
+*.temp
+*.orig
+*.rej
+*.swo
+
+# Editor directories
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Flutter/Dart/Pub related
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-version
+.flutter-plugins-dependencies
+.flutter-plugins
+.pub-cache/
+.pub/
+/build/
+/coverage/
+/generated_plugin_registrant.dart
+
+# iOS
+**/DerivedData/
+**/Flutter/Flutter.framework
+**/Flutter/Flutter.podspec
+**/Flutter/Flutter.xcframework
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/Flutter.podspec
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Flutter.xcframework
+ios/Pods/
+ios/Runner/GeneratedPluginRegistrant.*
+ios/Runner/Runner.xcworkspace/
+ios/Flutter/ephemeral/
+Pods/
+Podfile.lock
+
+# Android
+**/build/
+**/.gradle/
+**/local.properties
+**/app/*.iml
+**/app/*.keystore
+**/app/*.jks
+**/app/*-keystore.jks
+**/app/debug.keystore
+**/android/gradle.properties
+**/android/gradle-wrapper.properties
+**/android/captures/
+
+# Linux
+linux/flutter/.dart_tool/
+linux/flutter/ephemeral/
+
+# macOS
+macos/Flutter/ephemeral/
+macos/Pods/
+macos/Runner/GeneratedPluginRegistrant.*
+
+# Windows
+windows/flutter/.dart_tool/
+windows/flutter/ephemeral/
+windows/flutter/runner/Debug/
+windows/flutter/runner/Release/
+
+# Generated files
+*.lock
+*.dart_tool/
+.dart_tool/**
+.packages
+pubspec.lock
+
+# Environment and local config
+.env
+.env.*
+android/local.properties
+ios/Flutter/Generated.xcconfig
+
+google-services.json
+**/GoogleService-Info.plist
+
+# Symbolication and obfuscation
+app.*.symbols
+app.*.map.json
+
+# Documentation output
+**/doc/api/
