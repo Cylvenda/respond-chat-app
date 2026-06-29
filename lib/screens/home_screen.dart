@@ -30,20 +30,14 @@ class _HomeScreenState extends State<HomeScreen> {
     final user = authProvider.currentUser;
 
     return Scaffold(
-      // Responsive AppBar that prevents text overflow on mobile devices
-      // - Automatically resizes logo, text, and spacing based on screen width
-      // - Uses TextOverflow.ellipsis to handle long titles gracefully
-      // - Adjusts font sizes for better readability on small screens
       appBar: ResponsiveAppBar(
         title: 'CyberGuard - Security Chatbot',
         onLogoLongPress: () {
-          // Hidden admin login feature - long press on logo
-          Navigator.of(
-            context,
-          ).push(MaterialPageRoute(builder: (_) => const AdminLoginScreen()));
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const AdminLoginScreen()),
+          );
         },
         actions: [
-          // Responsive popup menu for chat actions
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'new') {
@@ -126,7 +120,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.green.withOpacity(0.08),
                             borderRadius: BorderRadius.circular(6),
                           ),
-                          // Responsive status badge that prevents overflow
                           child: Wrap(
                             children: [
                               const Icon(

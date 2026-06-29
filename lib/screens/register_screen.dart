@@ -62,9 +62,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
 
     if (password != confirmPassword) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Passwords do not match')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Passwords do not match')),
+      );
       return;
     }
 
@@ -90,39 +90,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Registration successful! Welcome.')),
       );
-      Navigator.of(
-        context,
-      ).pushReplacement(MaterialPageRoute(builder: (_) => const ChatScreen()));
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const ChatScreen()),
+      );
     } else {
       final error =
           authProvider.error ?? 'Registration failed. Please try again.';
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    // Responsive padding based on screen width
     final horizontalPadding = screenWidth < 600 ? 16.0 : 20.0;
 
     return Scaffold(
-      // Responsive AppBar with adaptive title sizing
       appBar: ResponsiveAppBar(title: 'Create Account', showLogo: false),
       body: Padding(
-        // Responsive horizontal padding
         padding: EdgeInsets.all(horizontalPadding),
         child: Center(
           child: SingleChildScrollView(
             child: ConstrainedBox(
-              // Limit max width on large screens for better UX
               constraints: const BoxConstraints(maxWidth: 500),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Responsive icon size
                   Icon(
                     Icons.person_add,
                     size: screenWidth < 600 ? 80 : 96,
@@ -232,7 +225,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         : const Text('Register'),
                   ),
                   const SizedBox(height: 16),
-                  // Responsive login link - wraps on narrow screens
                   Wrap(
                     alignment: WrapAlignment.center,
                     children: [

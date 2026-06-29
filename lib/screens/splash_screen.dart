@@ -42,7 +42,6 @@ class _SplashScreenState extends State<SplashScreen>
       context.read<AuthProvider>().initialize();
     });
 
-    // Navigate after delay
     Future.delayed(const Duration(seconds: 3), () async {
       if (!mounted) return;
 
@@ -87,14 +86,12 @@ class _SplashScreenState extends State<SplashScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Animated logo with responsive sizing
             FadeTransition(
               opacity: _fadeAnimation,
               child: SlideTransition(
                 position: _slideAnimation,
                 child: Image.asset(
                   'assets/logo.png',
-                  // Responsive logo size
                   height: isMobile ? 80 : 100,
                   width: isMobile ? 80 : 100,
                   errorBuilder: (context, error, stackTrace) {
@@ -108,8 +105,6 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
             const SizedBox(height: 32),
-
-            // Animated title with responsive text sizing
             FadeTransition(
               opacity: _fadeAnimation,
               child: SlideTransition(
@@ -127,7 +122,6 @@ class _SplashScreenState extends State<SplashScreen>
                             ?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: AppTheme.primaryColor,
-                              // Responsive font size
                               fontSize: isMobile ? 24 : null,
                             ),
                         maxLines: 3,
@@ -139,8 +133,6 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
             const SizedBox(height: 64),
-
-            // Loading indicator
             const CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primaryColor),
             ),

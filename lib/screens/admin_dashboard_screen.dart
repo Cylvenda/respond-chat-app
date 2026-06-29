@@ -103,9 +103,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   Navigator.of(context).pop();
                 } else {
                   final error = authProvider.error ?? 'Failed to create user.';
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(error)));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(error)),
+                  );
                 }
               },
               child: const Text('Create'),
@@ -124,14 +124,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
     return Scaffold(
       drawer: const AppDrawer(),
-      // Responsive AppBar for Admin Dashboard
-      // - Automatically adjusts action button sizes on small screens
-      // - Prevents overflow on mobile devices
       appBar: ResponsiveAppBar(
         title: 'Admin Dashboard',
         showLogo: false,
         actions: [
-          // Responsive action buttons
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: authProvider.isLoading ? null : authProvider.loadUsers,
@@ -338,11 +334,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                                                 TextField(
                                                   controller: pwController,
                                                   obscureText: true,
-                                                  decoration:
-                                                      const InputDecoration(
-                                                        labelText:
-                                                            'New Password',
-                                                      ),
+                                                  decoration: const InputDecoration(
+                                                    labelText:
+                                                        'New Password',
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -381,9 +376,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                                         }
                                         final ok = await authProvider
                                             .resetPassword(
-                                              email: user.email,
-                                              newPassword: newPw,
-                                            );
+                                          email: user.email,
+                                          newPassword: newPw,
+                                        );
                                         if (ok) {
                                           ScaffoldMessenger.of(
                                             context,

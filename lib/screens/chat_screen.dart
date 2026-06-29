@@ -19,11 +19,11 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  String? _lastError;
 
   @override
   void initState() {
     super.initState();
-    // Initialize chat when screen loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         context.read<ChatProvider>().initializeChat();
@@ -63,16 +63,39 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     final chatProvider = context.watch<ChatProvider>();
 
+    if (chatProvider.error != null &&
+        chatProvider.error != _lastError &&
+        mounted) {
+      _lastError = chatProvider.error;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) => AlertDialog(
+              icon: const Icon(Icons.error_outline, color: AppTheme.errorColor),
+              title: const Text('Something went wrong'),
+              content: Text(chatProvider.error ?? 'An unexpected error occurred.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.read<ChatProvider>().clearError();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      });
+    }
+
     return Scaffold(
       drawer: const AppDrawer(),
-      // Responsive AppBar that prevents text overflow on mobile devices
-      // - Automatically resizes logo, text, and spacing based on screen width
-      // - Uses TextOverflow.ellipsis to handle long titles gracefully
-      // - Adjusts font sizes for better readability on small screens
       appBar: ResponsiveAppBar(
         title: 'CyberGuard - Security Chatbot',
         actions: [
-          // Responsive popup menu for chat actions
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'new') {
@@ -111,36 +134,7 @@ class _ChatScreenState extends State<ChatScreen> {
         padding: EdgeInsets.zero,
         child: Column(
           children: [
-            // Error message display
-            if (chatProvider.error != null)
-              Container(
-                color: AppTheme.errorColor.withValues(alpha: 0.1),
-                padding: const EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    const Icon(Icons.error_outline, color: AppTheme.errorColor),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        chatProvider.error!,
-                        style: const TextStyle(color: AppTheme.errorColor),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // Clear error by sending a new message or clearing
-                        context.read<ChatProvider>().clearChat();
-                      },
-                      child: const Icon(
-                        Icons.close,
-                        color: AppTheme.errorColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             // Messages list
-            // The active status banner (for normal users)
             Builder(
               builder: (context) {
                 final auth = Provider.of<AuthProvider>(context);
@@ -156,7 +150,6 @@ class _ChatScreenState extends State<ChatScreen> {
                       vertical: 8,
                       horizontal: isMobile ? 12 : 16,
                     ),
-                    // Responsive status banner that doesn't overflow on narrow screens
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(

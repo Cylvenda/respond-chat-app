@@ -32,8 +32,6 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     final authProvider = context.read<AuthProvider>();
-    // Ensure auth service is initialized so the users database and default
-    // admin user exist before attempting to login.
     await authProvider.initialize();
     final success = await authProvider.login(
       email: _emailController.text.trim(),
@@ -64,36 +62,30 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
 
-      Navigator.of(
-        context,
-      ).pushReplacement(MaterialPageRoute(builder: (_) => const ChatScreen()));
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const ChatScreen()),
+      );
     } else {
       final error = authProvider.error ?? 'Login failed. Please try again.';
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    // Responsive padding based on screen width
     final horizontalPadding = screenWidth < 600 ? 16.0 : 20.0;
 
     return Scaffold(
-      // Responsive AppBar with adaptive title sizing
       appBar: ResponsiveAppBar(
         title: widget.isAdminLogin ? 'Admin Login' : 'Login',
         showLogo: false,
       ),
       body: Padding(
-        // Responsive horizontal padding
         padding: EdgeInsets.all(horizontalPadding),
         child: Center(
           child: SingleChildScrollView(
             child: ConstrainedBox(
-              // Limit max width on large screens for better UX
               constraints: const BoxConstraints(maxWidth: 500),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -102,7 +94,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     widget.isAdminLogin
                         ? Icons.admin_panel_settings
                         : Icons.login,
-                    // Responsive icon size
                     size: screenWidth < 600 ? 80 : 96,
                     color: AppTheme.primaryColor,
                   ),

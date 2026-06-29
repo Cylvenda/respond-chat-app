@@ -12,7 +12,6 @@ class ChatProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
 
-  // Getters
   Conversation get currentConversation => _currentConversation;
   bool get isLoading => _isLoading;
   String? get error => _error;
@@ -45,12 +44,10 @@ class ChatProvider extends ChangeNotifier {
       _error = null;
       notifyListeners();
 
-      // Add user message
       final userMessage = Message(content: content, role: MessageRole.user);
       _currentConversation.messages.add(userMessage);
       notifyListeners();
 
-      // Convert messages to format expected by API
       final messageHistory = _currentConversation.messages
           .map(
             (msg) => {
@@ -60,13 +57,11 @@ class ChatProvider extends ChangeNotifier {
           )
           .toList();
 
-      // Get API response
       final response = await _apiService.sendMessage(
         content,
         conversationHistory: messageHistory,
       );
 
-      // Add assistant message
       final assistantMessage = Message(
         content: response,
         role: MessageRole.assistant,
@@ -78,7 +73,11 @@ class ChatProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _isLoading = false;
-      _error = e.toString();
+      if (e is ApiException) {
+        _error = e.message;
+      } else {
+        _error = 'Something went wrong. Please try again.';
+      }
       notifyListeners();
     }
   }
@@ -102,6 +101,11 @@ class ChatProvider extends ChangeNotifier {
     _currentConversation.messages.removeWhere(
       (message) => message.id == messageId,
     );
+    notifyListeners();
+  }
+
+  void clearError() {
+    _error = null;
     notifyListeners();
   }
 }

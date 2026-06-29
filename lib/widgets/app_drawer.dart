@@ -63,9 +63,9 @@ class AppDrawer extends StatelessWidget {
               title: const Text('Login'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (_) => const LoginScreen()));
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const LoginScreen()),
+                );
               },
             ),
             ListTile(
@@ -84,9 +84,9 @@ class AppDrawer extends StatelessWidget {
             title: const Text('Chat'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const ChatScreen()));
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const ChatScreen()),
+              );
             },
           ),
           if (user?.isAdmin == true)
